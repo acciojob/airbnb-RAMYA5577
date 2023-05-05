@@ -61,15 +61,18 @@ public class HotelManagementRepository {
 
         int count =0;
         String s1="";
-        for(Hotel hotel:hotelMap.values()){
-            if(hotel.getFacilities().size()>count){
-                count=hotel.getFacilities().size();
+        for(Hotel hotel:hotelMap.values()) {
+            if (hotel.getFacilities().size() > count) {
+                count = hotel.getFacilities().size();
                 s1 = hotel.getHotelName();
             }
-            if(hotel.getFacilities().size()==count){
-                s1 = lexicography(s1,hotel.getHotelName(),0);
+            // s1 panner hotel.get = butter
+            if (hotel.getFacilities().size() == count && s1.compareTo(hotel.getHotelName()) > 0) {
+                s1 = hotel.getHotelName();
             }
-
+            if (hotel.getFacilities().size() == count && s1.compareTo(hotel.getHotelName()) < 0) {
+                s1 = s1;
+            }
         }
         return s1;
     }
