@@ -142,7 +142,6 @@ public class HotelManagementRepository {
               for (Facility facility1:oldFacilities) {
                   if (facility1 == facility) {
                       flag = true;
-                      break;
                   }
               }
               if(flag==false)
