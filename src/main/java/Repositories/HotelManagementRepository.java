@@ -39,12 +39,11 @@ public class HotelManagementRepository {
         //Incase somebody is trying to add the duplicate hotelName return FAILURE
         //in all other cases return SUCCESS after successfully adding the hotel to the hotelDb.
 
-        if (hotelMap.containsKey(hotel.getHotelName()) || hotel == null)
+        if (hotelMap.containsKey(hotel.getHotelName()) || hotel == null || hotel.getHotelName()==null)
             return "FAILURE";
-        else {
+
               hotelMap.put(hotel.getHotelName(),hotel);
             return "SUCCESS";
-        }
     }
 
     public Integer addUser(User user){
