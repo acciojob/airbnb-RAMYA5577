@@ -21,15 +21,14 @@ public class HotelManagementRepository {
 
     Map<Integer,User> userMap;
 
-    Map<String, List<Booking>> listOfBookingsMap;
+    Map<Integer, List<Booking>> listOfBookingsMap;
 
-    Map<String,List<Facility>>  hotelFacilityMap;
+
 
     public HotelManagementRepository() {
         this.hotelMap = new HashMap<>();
         this.listOfBookingsMap = new HashMap<>();
         this.userMap = new HashMap<>();
-        this.hotelFacilityMap = new HashMap<>();
     }
 
     public String addHotel(Hotel hotel) {
@@ -60,16 +59,17 @@ public class HotelManagementRepository {
         //Incase there is a tie return the lexicographically smaller hotelName
         //Incase there is not even a single hotel with atleast 1 facility return "" (empty string)
 
-        int listSize = 0;
-        String s1 = "";
-        for (String s : hotelMap.keySet()) {
-            if (hotelMap.get(s).getFacilities().size() > listSize) {
-                listSize = hotelMap.get(s).getFacilities().size();
-                s1 = s;
+        int count =0;
+        String s1="";
+        for(Hotel hotel:hotelMap.values()){
+            if(hotel.getFacilities().size()>count){
+                count=hotel.getFacilities().size();
+                s1 = hotel.getHotelName();
             }
-            if (hotelMap.get(s).getFacilities().size() == listSize) {
-                s1 = lexicography(s1, s, 0);
+            if(hotel.getFacilities().size()==count){
+                s1 = lexicography(s1,hotel.getHotelName(),0);
             }
+
         }
         return s1;
     }
@@ -106,12 +106,12 @@ public class HotelManagementRepository {
             booking.setBookingId(UUID.randomUUID().toString());
             booking.setAmountToBePaid(booking.getNoOfRooms()*hotel.getPricePerNight());
             hotel.setAvailableRooms(hotel.getAvailableRooms()-booking.getNoOfRooms());
-            if(listOfBookingsMap.get(user.getName())==null || !listOfBookingsMap.containsKey(user.getName())){
+            if(listOfBookingsMap.get(user.getaadharCardNo())==null || !listOfBookingsMap.containsKey(user.getaadharCardNo())){
                 List<Booking> bookingList = new ArrayList<>();
                 bookingList.add(booking);
-                listOfBookingsMap.put(user.getName(),bookingList);
+                listOfBookingsMap.put(user.getaadharCardNo(),bookingList);
             }
-            listOfBookingsMap.get(user.getName()).add(booking);
+            listOfBookingsMap.get(user.getaadharCardNo()).add(booking);
             return booking.getAmountToBePaid();
         }
         return -1;
@@ -123,13 +123,8 @@ public class HotelManagementRepository {
         //In this function return the bookings done by a person
 
         User user = userMap.get(aadharCard);
-        List<Booking> bookingList=new ArrayList<>();
-        int count=0;
-        for(String s: listOfBookingsMap.keySet()) {
-            count = listOfBookingsMap.get(user.getName()).size();
+       return listOfBookingsMap.get(aadharCard).size();
 
-        }
-            return count;
         }
 
     public Hotel updateFacilities(List<Facility> newFacilities, String hotelName){
@@ -138,23 +133,23 @@ public class HotelManagementRepository {
         //If the hotel is already having that facility ignore that facility otherwise add that facility in the hotelDb
         //return the final updated List of facilities and also update that in your hotelDb
         //Note that newFacilities can also have duplicate facilities possible
-          List<Facility> oldFacilities = hotelFacilityMap.get(hotelName);
-         if(oldFacilities.size()==0 || !hotelFacilityMap.containsKey(hotelMap.get(hotelName))){
-             hotelFacilityMap.put(hotelName,newFacilities);
-             return hotelMap.get(hotelName);
-         }
-          for (Facility facility:newFacilities){
-              boolean flag = false;
-              for (Facility facility1:oldFacilities) {
-                  if (facility1 == facility) {
-                      flag = true;
-                      break;
-                  }
-              }
-              if(flag==false)
-                  oldFacilities.add(facility);
-          }
-          return hotelMap.get(hotelName);
 
+         Hotel hotel = hotelMap.get(hotelName);
+         if(hotel.getFacilities().size()==0) {
+             hotel.setFacilities(newFacilities);
+             return hotel;
+         }
+         for (Facility facility:newFacilities){
+             boolean flag = false;
+             for (Facility facility1:hotel.getFacilities()){
+                 if(facility1==facility){
+                     flag = true;
+                     break;
+                 }
+             }
+             if(flag==false)
+             hotel.getFacilities().add(facility);
+         }
+  return  hotel;
     }
 }
