@@ -59,7 +59,7 @@ public class HotelManagementRepository {
         //Out of all the hotels we have added so far, we need to find the hotelName with most no of facilities
         //Incase there is a tie return the lexicographically smaller hotelName
         //Incase there is not even a single hotel with atleast 1 facility return "" (empty string)
-        Hotel hotel = new Hotel();
+
         int listSize = 0;
         String s1 = "";
         for (String s : hotelMap.keySet()) {
@@ -75,9 +75,12 @@ public class HotelManagementRepository {
     }
 
     public String lexicography(String s1,String s2,int a) {
-        if (s1.charAt(a) > s2.charAt(a))
+        int length1 = s1.length();
+        int length2 = s2.length();
+
+        if (s1.charAt(a) > s2.charAt(a) || a>length2)
             return s2;
-        if (s1.charAt(a) < s2.charAt(a))
+        if (s1.charAt(a) < s2.charAt(a) || a>length1)
             return s1;
         else {
             a++;
@@ -142,6 +145,7 @@ public class HotelManagementRepository {
               for (Facility facility1:oldFacilities) {
                   if (facility1 == facility) {
                       flag = true;
+                      break;
                   }
               }
               if(flag==false)
