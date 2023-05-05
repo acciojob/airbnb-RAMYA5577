@@ -139,7 +139,7 @@ public class HotelManagementRepository {
         //return the final updated List of facilities and also update that in your hotelDb
         //Note that newFacilities can also have duplicate facilities possible
           List<Facility> oldFacilities = hotelFacilityMap.get(hotelName);
-         if(oldFacilities==null){
+         if(oldFacilities.size()==0 || !hotelFacilityMap.containsKey(hotelMap.get(hotelName))){
              hotelFacilityMap.put(hotelName,newFacilities);
              return hotelMap.get(hotelName);
          }
