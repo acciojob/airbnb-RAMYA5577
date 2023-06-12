@@ -22,6 +22,7 @@ public class Hotel {
         this.pricePerNight = pricePerNight;
     }
 
+
     public String getHotelName() {
         return hotelName;
     }

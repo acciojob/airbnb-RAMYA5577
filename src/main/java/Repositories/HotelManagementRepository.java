@@ -26,9 +26,9 @@ public class HotelManagementRepository {
 
 
     public HotelManagementRepository() {
-        this.hotelMap = new HashMap<>();
-        this.listOfBookingsMap = new HashMap<>();
-        this.userMap = new HashMap<>();
+        this.hotelMap = new HashMap<String,Hotel>();
+        this.listOfBookingsMap = new HashMap<Integer,List<Booking>>();
+        this.userMap = new HashMap<Integer,User>();
     }
 
     public String addHotel(Hotel hotel) {
@@ -49,9 +49,10 @@ public class HotelManagementRepository {
 
         //You need to add a User Object to the database
         //Assume that user will always be a valid user and return the aadharCardNo of the user
-     userMap.put(user.getaadharCardNo(),user);
+        userMap.put(user.getaadharCardNo(),user);
         return user.getaadharCardNo();
     }
+
 
     public String getHotelWithMostFacilities() {
 
@@ -77,19 +78,19 @@ public class HotelManagementRepository {
         return s1;
     }
 
-    public String lexicography(String s1,String s2,int a) {
-        int length1 = s1.length();
-        int length2 = s2.length();
-
-        if (s1.charAt(a) > s2.charAt(a) || a>length2)
-            return s2;
-        if (s1.charAt(a) < s2.charAt(a) || a>length1)
-            return s1;
-        else {
-            a++;
-            return lexicography(s1, s2, a);
-        }
-    }
+//    public String lexicography(String s1,String s2,int a) {
+//        int length1 = s1.length();
+//        int length2 = s2.length();
+//
+//        if (s1.charAt(a) > s2.charAt(a) || a>length2)
+//            return s2;
+//        if (s1.charAt(a) < s2.charAt(a) || a>length1)
+//            return s1;
+//        else {
+//            a++;
+//            return lexicography(s1, s2, a);
+//        }
+//    }
 
     public int bookARoom(Booking booking){
 
