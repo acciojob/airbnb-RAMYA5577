@@ -110,7 +110,8 @@ public class HotelManagementRepository {
             booking.setBookingId(UUID.randomUUID().toString());
             booking.setAmountToBePaid(booking.getNoOfRooms()*hotel.getPricePerNight());
             hotel.setAvailableRooms(hotel.getAvailableRooms()-booking.getNoOfRooms());
-            if(listOfBookingsMap.get(user.getaadharCardNo())==null || !listOfBookingsMap.containsKey(user.getaadharCardNo())){
+            //listOfBookingsMap.get(user.getaadharCardNo())==null ||
+            if( !listOfBookingsMap.containsKey(user.getaadharCardNo())){
                 List<Booking> bookingList = new ArrayList<>();
                 bookingList.add(booking);
                 listOfBookingsMap.put(user.getaadharCardNo(),bookingList);
